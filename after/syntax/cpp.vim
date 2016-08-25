@@ -40,10 +40,14 @@ hi def link cCustomFunc  Function
 " Class and namespace scope
 if exists('g:cpp_class_scope_highlight') && g:cpp_class_scope_highlight
     syn match    cCustomScope    "::"
-    syn match    cCustomClass    "\w\+\s*::" 
-                \contains=cCustomScope 
+    syn match    cCustomClass    "\w\+\s*::" contains=cCustomScope
+    hi def link cCustomClass cppStructure
+
+    "syn match    cCustomScope    "::"
+    "syn match    cCustomClass    "\w\+\s*::"
+    "           \contains=cCustomScope
     " hi def link cCustomClass Function  " disabled for now
-    syn match   cCustomClass    "\<\u\w*\s*\>" 
+    "syn match   cCustomClass    "\<\u\w*\s*\>"
 endif
 
 " Template functions
@@ -1374,6 +1378,11 @@ if !exists("cpp_no_boost")
     syntax keyword cppSTLnamespace boost
     syntax keyword cppSTLcast lexical_cast
 endif " Boost
+
+if !exists("cpp_no_qt")
+    syntax keyword cppSTLcast qobject_cast
+    syntax keyword cppSTLcast qRegisterMetaType
+endif " Qt
 
 " Default highlighting
 if version >= 508 || !exists("did_cpp_syntax_inits")
